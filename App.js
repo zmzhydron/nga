@@ -9,6 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
+  Image,
+  Button,
   View
 } from 'react-native';
 
@@ -21,14 +23,46 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super();
+    this.state = { msg: `fetch Api` };
+  }
+  componentDidMount() {
+    console.log(`componentDidMount() {`)
+  }
+  shitload() {
+    console.log(`shit load stockings`);
+    fetch('http://192.168.2.91:8889/get/fuck').then(val => {
+      console.log(val);
+      this.setState({
+        msg: `192.168.2.91/get/fuck`
+        // msg: val
+      })
+    }).catch(val => {
+      console.log(`--------------`)
+      console.log(val);
+      this.setState({
+        msg: '$$$$$$$$$$$$$$$$$$$$'
+      })
+      console.log(`--------------`)
+    })
+  }
   render() {
+    console.disableYellowBox = true;
+    console.warn('YellowBox is disabled.');
+    let name = 'shitman';
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-         yoyoyoy,watch up!!!
-        </Text>
         <Text style={styles.instructions}>
-          fuckyou btich..........
+          -------{this.state.msg} --------
+        </Text>
+        <Text style={styles.welcome}>
+          {this.state.msg}
+        </Text>
+        <Image source={require('./src/imgs/1.jpg')} style={styles.imgs} />
+        <Button onPress={this.shitload.bind(this)} title="lord!!"></Button>
+        <Text style={styles.instructions}>
+          fuckyou ~~~ btich..........!!!!
         </Text>
         <Text style={styles.instructions}>
           {instructions}
@@ -45,8 +79,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  imgs: {
+    height: 200,
+    width: 200
+  },
   welcome: {
-    fontSize: 20,
+    fontSize: 36,
     textAlign: 'center',
     margin: 10,
   },
